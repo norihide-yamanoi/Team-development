@@ -56,6 +56,8 @@ class TeamsController < ApplicationController
 
   def assignment
     @team.update(owner_id: params[:owner_id])
+    @user = User.find(@team.owner_id)
+    AssignmentMailer.assignment_mail(@user).deliver
     redirect_to team_path, notice: '権限が移動'
   end
 
